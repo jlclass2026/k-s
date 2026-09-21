@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fier Learners</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f3f8fe;
+      --card-bg: #ffffff;
+      --primary: #4361ee;
+      --accent-green: #2ec4b6;
+      --accent-red: #e63946;
+      --text: #2b2d42;
+      --muted: #8d99ae;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto 24px auto;
+      background: #ffffff;
+      padding: 16px 28px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .badge-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #ff9f1c, #e63946);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(230, 57, 70, 0.35);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 3px solid transparent;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(67, 97, 238, 0.12);
+      border-color: #dbe4ff;
+    }
+
+    .avatar-wrap {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: #f0f4ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pill-points {
+      background: #e8f9f6;
+      color: #008774;
+    }
+
+    .pill-warnings {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+
+    /* Quiz Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(43, 45, 66, 0.55);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 440px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+      animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .equation {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 18px 0;
+      letter-spacing: 1px;
+    }
+
+    .input-field {
+      width: 140px;
+      font-size: 32px;
+      text-align: center;
+      padding: 8px 12px;
+      border: 3px solid #dcdff2;
+      border-radius: 14px;
+      font-weight: 700;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .input-field:focus {
+      border-color: var(--primary);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+    }
+
+    .btn-cancel {
+      background: #edeff5;
+      color: #6c757d;
+    }
+
+    .feedback {
+      min-height: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 14px;
+    }
+
+    .feedback.good { color: var(--accent-green); }
+    .feedback.bad { color: var(--accent-red); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <div class="badge-icon">FL</div>
+      <div>
+        <h1>Fier Learners</h1>
+        <div class="subtitle">Alphabetical Class Tracker &bull; Year 3 Maths</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="grid" id="studentGrid"></main>
+
+  <div class="modal-overlay" id="quizModal">
+    <div class="modal-box">
+      <h2 id="modalStudentName" style="margin: 0; font-size: 24px;"></h2>
+      <p style="color: var(--muted); margin: 6px 0 0 0;">Solve the equation for +2 points!</p>
+      
+      <div class="equation" id="mathProblem">10 + 10 = ?</div>
+
+      <input type="number" id="answerInput" class="input-field" placeholder="?" autocomplete="off">
+
+      <div class="actions">
+        <button class="btn-cancel" onclick="closeModal()">Back</button>
+        <button class="btn-submit" onclick="checkAnswer()">Submit</button>
+      </div>
+
+      <div class="feedback" id="feedbackText"></div>
+    </div>
+  </div>
+
+  <script>
+    // Alphabetical student list
+    const students = [
+      { id: 1, name: "Student 1", points: 0, warnings: 0, color: "#ffadad" },
+      { id: 2, name: "Student 2", points: 0, warnings: 0, color: "#ffd6a5" },
+      { id: 3, name: "Student 3", points: 0, warnings: 0, color: "#fdffb6" },
+      { id: 4, name: "Student 4", points: 0, warnings: 0, color: "#caffbf" },
+      { id: 5, name: "Student 5", points: 0, warnings: 0, color: "#9bf6ff" },
+      { id: 6, name: "Student 6", points: 0, warnings: 0, color: "#a0c4ff" },
+      { id: 7, name: "Student 7", points: 0, warnings: 0, color: "#bdb2ff" },
+      { id: 8, name: "Student 8", points: 0, warnings: 0, color: "#ffc6ff" }
+    ];
+
+    let activeStudent = null;
+    let currentA = 0;
+    let currentB = 0;
+
+    // Generates a simple SVG Dojo-like monster
+    function renderMonster(color) {
+      return `
+        <svg width="60" height="60" viewBox="0 0 100 100">
+          <ellipse cx="50" cy="55" rx="36" ry="34" fill="${color}" />
+          <!-- Horns/Ears -->
+          <polygon points="26,26 34,14 42,26" fill="${color}" opacity="0.8" />
+          <polygon points="58,26 66,14 74,26" fill="${color}" opacity="0.8" />
+          <!-- Big Eye -->
+          <circle cx="50" cy="50" r="14" fill="#ffffff" />
+          <circle cx="52" cy="50" r="6" fill="#1e1e24" />
+          <circle cx="54" cy="48" r="2" fill="#ffffff" />
+          <!-- Smile -->
+          <path d="M 40 70 Q 50 78 60 70" stroke="#1e1e24" stroke-width="3" fill="none" stroke-linecap="round" />
+        </svg>
+      `;
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('studentGrid');
+      grid.innerHTML = '';
+
+      students.forEach(student => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = () => openQuiz(student);
+
+        card.innerHTML = `
+          <div class="avatar-wrap">${renderMonster(student.color)}</div>
+          <div class="name">${student.name}</div>
+          <div class="stats">
+            <span class="pill pill-points">&#9733; ${student.points} pts</span>
+            <span class="pill pill-warnings">&#9888; ${student.warnings}</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openQuiz(student) {
+      activeStudent = student;
+      document.getElementById('modalStudentName').textContent = student.name;
+      document.getElementById('feedbackText').textContent = '';
+      document.getElementById('answerInput').value = '';
+
+      // Random Year 3 friendly addition (multiples of 10 or 2-digit sums)
+      currentA = (Math.floor(Math.random() * 4) + 1) * 10; // 10, 20, 30, 40
+      currentB = Math.floor(Math.random() * 30) + 10;      // 10 to 39
+
+      document.getElementById('mathProblem').textContent = `${currentA} + ${currentB} = ?`;
+      document.getElementById('quizModal').classList.add('active');
+
+      setTimeout(() => {
+        document.getElementById('answerInput').focus();
+      }, 100);
+    }
+
+    function closeModal() {
+      document.getElementById('quizModal').classList.remove('active');
+    }
+
+    function checkAnswer() {
+      const val = parseInt(document.getElementById('answerInput').value, 10);
+      const fb = document.getElementById('feedbackText');
+      const correct = currentA + currentB;
+
+      if (isNaN(val)) return;
+
+      if (val === correct) {
+        activeStudent.points += 2;
+        fb.className = 'feedback good';
+        fb.textContent = 'Correct! +2 points earned!';
+        renderGrid();
+        setTimeout(closeModal, 900);
+      } else {
+        activeStudent.warnings += 1;
+        fb.className = 'feedback bad';
+        fb.textContent = `Incorrect (Answer was ${correct}). Warning added!`;
+        renderGrid();
+        setTimeout(closeModal, 1400);
+      }
+    }
+
+    // Enter key submits answer
+    document.getElementById('answerInput').addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') checkAnswer();
+    });
+
+    renderGrid();
+  </script>
+</body>
+</html>
