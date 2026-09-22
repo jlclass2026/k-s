@@ -2,156 +2,252 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fier Learners</title>
+  <title>Fier Learners - Upgraded Edition</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Sniglet:wght@800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f3f8fe;
+      --bg: #f4f8fe;
       --card-bg: #ffffff;
       --primary: #4361ee;
       --accent-green: #2ec4b6;
       --accent-red: #e63946;
-      --text: #2b2d42;
-      --muted: #8d99ae;
+      --gold: #ffb703;
+      --text: #22243a;
+      --border-soft: #d8e2fd;
     }
 
     * {
       box-sizing: border-box;
       font-family: 'Fredoka', cursive, sans-serif;
+      user-select: none;
     }
 
     body {
       margin: 0;
-      padding: 24px;
-      background-color: var(--bg);
+      padding: 16px;
+      background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 100%);
       color: var(--text);
+      min-height: 100vh;
     }
 
     header {
+      max-width: 1100px;
+      margin: 0 auto 16px auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 1100px;
-      margin: 0 auto 24px auto;
-      background: #ffffff;
-      padding: 16px 28px;
-      border-radius: 20px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      border: 3px solid var(--border-soft);
+      box-shadow: 0 8px 20px rgba(67, 97, 238, 0.08);
     }
 
-    .logo-area {
+    .brand-side {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
-    .badge-icon {
+    /* Hand-drawn flower logo added at top of screen from sketch */
+    .flower-logo {
       width: 52px;
       height: 52px;
-      background: linear-gradient(135deg, #ff9f1c, #e63946);
-      border-radius: 14px;
+      background: #fff0f5;
+      border: 3px solid #ff4d6d;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      font-weight: 700;
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(230, 57, 70, 0.35);
+      box-shadow: 0 4px 10px rgba(255, 77, 109, 0.25);
     }
 
     h1 {
       margin: 0;
-      font-size: 28px;
-      color: var(--text);
+      font-family: 'Sniglet', cursive;
+      font-size: 30px;
+      color: var(--primary);
+      line-height: 1;
     }
 
     .subtitle {
-      font-size: 14px;
-      color: var(--muted);
+      font-size: 13px;
+      color: #7b88a8;
+      font-weight: 600;
       margin-top: 2px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .card {
+    .btn-leave {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 2px solid #fca5a5;
+      border-radius: 14px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .btn-leave:hover {
+      background: #fca5a5;
+    }
+
+    .btn-pop-toggle {
+      background: #e0e7ff;
+      color: #3730a3;
+      border: 2px solid #c7d2fe;
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn-pop-toggle.active {
+      background: #4361ee;
+      color: #fff;
+      border-color: #4361ee;
+    }
+
+    /* Main Grid Layout */
+    .layout-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 18px;
+    }
+
+    @media (max-width: 860px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Student Cards Grid */
+    .students-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .student-card {
       background: var(--card-bg);
-      border-radius: 22px;
-      padding: 20px 16px;
+      border-radius: 20px;
+      padding: 16px;
       text-align: center;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      border: 3px solid #eef2ff;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 3px solid transparent;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      position: relative;
     }
 
-    .card:hover {
+    .student-card:hover {
       transform: translateY(-4px);
+      border-color: #c7d2fe;
       box-shadow: 0 10px 20px rgba(67, 97, 238, 0.12);
-      border-color: #dbe4ff;
     }
 
-    .avatar-wrap {
-      width: 86px;
-      height: 86px;
-      border-radius: 50%;
-      background: #f0f4ff;
+    .avatar-wrapper {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      background: #f8faff;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 8px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
     }
 
-    .name {
-      font-size: 18px;
+    .student-title {
       font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 17px;
+      color: #1e293b;
+      margin-bottom: 6px;
     }
 
-    .stats {
+    .stats-row {
       display: flex;
-      gap: 10px;
+      gap: 6px;
       width: 100%;
       justify-content: center;
     }
 
-    .pill {
-      padding: 6px 12px;
-      border-radius: 12px;
-      font-size: 13px;
+    .stat-pill {
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 12px;
       font-weight: 700;
+    }
+
+    .pill-evo {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .pill-warn {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    /* Warning Egg Sidebar from bottom right sketch */
+    .sidebar-egg-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px;
+      text-align: center;
+      border: 3px solid var(--border-soft);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 4px;
+      justify-content: space-between;
     }
 
-    .pill-points {
-      background: #e8f9f6;
-      color: #008774;
+    .egg-svg-box {
+      width: 130px;
+      height: 160px;
+      margin: 10px 0;
     }
 
-    .pill-warnings {
-      background: #ffebee;
-      color: #d32f2f;
+    .lockout-msg {
+      background: #fef2f2;
+      border: 2px dashed #ef4444;
+      border-radius: 14px;
+      padding: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #991b1b;
+      margin-top: 10px;
+      display: none;
     }
 
-    /* Quiz Modal */
+    .lockout-msg.active {
+      display: block;
+    }
+
+    /* Challenge Popup Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(43, 45, 66, 0.55);
+      background: rgba(30, 41, 59, 0.6);
       backdrop-filter: blur(4px);
       display: none;
       align-items: center;
@@ -168,223 +264,390 @@
       background: #ffffff;
       border-radius: 28px;
       width: 100%;
-      max-width: 440px;
-      padding: 28px;
+      max-width: 460px;
+      padding: 26px;
       text-align: center;
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
-      animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 4px solid var(--primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     }
 
-    @keyframes pop {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .difficulty-select {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 12px 0;
     }
 
-    .equation {
-      font-size: 40px;
+    .chip-btn {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--primary);
-      margin: 18px 0;
-      letter-spacing: 1px;
+      cursor: pointer;
+      color: #475569;
     }
 
-    .input-field {
-      width: 140px;
-      font-size: 32px;
-      text-align: center;
-      padding: 8px 12px;
-      border: 3px solid #dcdff2;
-      border-radius: 14px;
-      font-weight: 700;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-
-    .input-field:focus {
+    .chip-btn.active {
+      background: var(--primary);
+      color: #fff;
       border-color: var(--primary);
     }
 
-    .actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
+    .math-eq-display {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 16px 0;
+      letter-spacing: 1px;
     }
 
-    button {
-      flex: 1;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      border: none;
+    .math-input-field {
+      width: 140px;
+      font-size: 32px;
+      text-align: center;
+      padding: 8px;
+      border: 3px solid #cbd5e1;
       border-radius: 14px;
+      outline: none;
+      font-weight: 800;
+    }
+
+    .math-input-field:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-act-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn-act {
+      flex: 1;
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.15s ease, transform 0.1s ease;
     }
 
-    button:active {
-      transform: scale(0.97);
-    }
+    .btn-submit { background: var(--accent-green); color: #fff; }
+    .btn-back { background: #f1f5f9; color: #475569; }
 
-    .btn-submit {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
-    }
-
-    .btn-cancel {
-      background: #edeff5;
-      color: #6c757d;
-    }
-
-    .feedback {
+    .fb-zone {
       min-height: 24px;
       font-size: 15px;
       font-weight: 700;
-      margin-top: 14px;
+      margin-top: 12px;
     }
-
-    .feedback.good { color: var(--accent-green); }
-    .feedback.bad { color: var(--accent-red); }
+    .fb-zone.good { color: #059669; }
+    .fb-zone.bad { color: #dc2626; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-area">
-      <div class="badge-icon">FL</div>
+    <div class="brand-side">
+      <!-- Hand-drawn Flower Logo added from sketch -->
+      <div class="flower-logo">
+        <svg viewBox="0 0 100 100" width="38" height="38">
+          <circle cx="50" cy="30" r="14" fill="#ff4d6d"/>
+          <circle cx="70" cy="50" r="14" fill="#ff4d6d"/>
+          <circle cx="50" cy="70" r="14" fill="#ff4d6d"/>
+          <circle cx="30" cy="50" r="14" fill="#ff4d6d"/>
+          <circle cx="50" cy="50" r="12" fill="#ffd166"/>
+        </svg>
+      </div>
       <div>
         <h1>Fier Learners</h1>
-        <div class="subtitle">Alphabetical Class Tracker &bull; Year 3 Maths</div>
+        <div class="subtitle">Hard Maths Challenge &bull; Class Warning Egg Tracker</div>
       </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn-pop-toggle" id="btnPopToggle" onclick="toggleRandomPopups()">&#9200; Random Popups: OFF</button>
+      <button class="btn-leave" onclick="leaveApp()">&#10060; Leave App</button>
     </div>
   </header>
 
-  <main class="grid" id="studentGrid"></main>
+  <div class="layout-grid">
+    <!-- Student Cards Grid -->
+    <main class="students-board" id="studentsBoard"></main>
 
-  <div class="modal-overlay" id="quizModal">
-    <div class="modal-box">
-      <h2 id="modalStudentName" style="margin: 0; font-size: 24px;"></h2>
-      <p style="color: var(--muted); margin: 6px 0 0 0;">Solve the equation for +2 points!</p>
-      
-      <div class="equation" id="mathProblem">10 + 10 = ?</div>
-
-      <input type="number" id="answerInput" class="input-field" placeholder="?" autocomplete="off">
-
-      <div class="actions">
-        <button class="btn-cancel" onclick="closeModal()">Back</button>
-        <button class="btn-submit" onclick="checkAnswer()">Submit</button>
+    <!-- Class Warning Egg Sidebar (From sketch: "if egg cracks locks for 9h") -->
+    <aside class="sidebar-egg-card">
+      <div>
+        <h3 style="margin: 0; font-size: 18px; color: #1e293b;">Class Warning Egg</h3>
+        <p style="font-size: 12px; color: #64748b; margin: 4px 0 10px 0;">5 Cracks triggers a cooldown lock!</p>
       </div>
 
-      <div class="feedback" id="feedbackText"></div>
+      <div class="egg-svg-box" id="eggVisual"></div>
+
+      <div style="font-size: 13px; font-weight: 700;" id="eggStatusText">Cracks: 0 / 5</div>
+
+      <div class="lockout-msg" id="lockoutNotice">
+        🔒 LOCKED FOR 9 HOURS!<br>
+        <span style="font-size:11px; font-weight:500;">Egg fully cracked open!</span><br>
+        <button class="chip-btn" style="margin-top:6px; background:#fff;" onclick="resetEggLock()">Teacher Reset</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Maths Challenge Popup Modal -->
+  <div class="modal-overlay" id="quizModal">
+    <div class="modal-box">
+      <h2 id="modalStudentTitle" style="margin:0; font-size:22px; color:#1e293b;"></h2>
+      <p style="color:#64748b; font-size:13px; margin:4px 0 0 0;">Solve correctly for +2 EVO Points!</p>
+
+      <!-- Multi-tier Hard Maths -->
+      <div class="difficulty-select">
+        <button class="chip-btn active" id="diff-multi" onclick="setDiff('multi')">Two-Digit Add &amp; Sub</button>
+        <button class="chip-btn" id="diff-tables" onclick="setDiff('tables')">Times Tables (3-12x)</button>
+        <button class="chip-btn" id="diff-twostep" onclick="setDiff('twostep')">2-Step Equation</button>
+      </div>
+
+      <div class="math-eq-display" id="eqDisplay">45 + 38 = ?</div>
+      <input type="number" id="mathInput" class="math-input-field" autocomplete="off" placeholder="?">
+
+      <div class="btn-act-row">
+        <button class="btn-act btn-back" onclick="closeModal()">Back</button>
+        <button class="btn-act btn-submit" onclick="checkAnswer()">Submit</button>
+      </div>
+
+      <div class="fb-zone" id="fbMessage"></div>
     </div>
   </div>
 
   <script>
-    // Alphabetical student list
+    // Generic Student Roster
     const students = [
-      { id: 1, name: "Student 1", points: 0, warnings: 0, color: "#ffadad" },
-      { id: 2, name: "Student 2", points: 0, warnings: 0, color: "#ffd6a5" },
-      { id: 3, name: "Student 3", points: 0, warnings: 0, color: "#fdffb6" },
-      { id: 4, name: "Student 4", points: 0, warnings: 0, color: "#caffbf" },
-      { id: 5, name: "Student 5", points: 0, warnings: 0, color: "#9bf6ff" },
-      { id: 6, name: "Student 6", points: 0, warnings: 0, color: "#a0c4ff" },
-      { id: 7, name: "Student 7", points: 0, warnings: 0, color: "#bdb2ff" },
-      { id: 8, name: "Student 8", points: 0, warnings: 0, color: "#ffc6ff" }
+      { id: 1, name: "Student 1", evo: 167, warnings: 1, color: "#ffccd5" },
+      { id: 2, name: "Student 2", evo: 150, warnings: 0, color: "#c8b6ff" },
+      { id: 3, name: "Student 3", evo: 149, warnings: 2, color: "#ffd6a5" },
+      { id: 4, name: "Student 4", evo: 127, warnings: 1, color: "#caffbf" },
+      { id: 5, name: "Student 5", evo: 119, warnings: 0, color: "#9bf6ff" },
+      { id: 6, name: "Student 6", evo: 99,  warnings: 0, color: "#fdffb6" },
+      { id: 7, name: "Student 7", evo: 85,  warnings: 0, color: "#ffc6ff" },
+      { id: 8, name: "Student 8", evo: 72,  warnings: 1, color: "#b9fbc0" }
     ];
 
+    let eggCracks = 0;
+    let isEggLocked = false;
+    let randomPopupsEnabled = false;
+    let popupTimer = null;
     let activeStudent = null;
-    let currentA = 0;
-    let currentB = 0;
+    let currentDifficulty = 'multi';
+    let currentAnswer = 0;
 
-    // Generates a simple SVG Dojo-like monster
+    // Upgraded Monster Avatar Renderer
     function renderMonster(color) {
       return `
-        <svg width="60" height="60" viewBox="0 0 100 100">
-          <ellipse cx="50" cy="55" rx="36" ry="34" fill="${color}" />
-          <!-- Horns/Ears -->
-          <polygon points="26,26 34,14 42,26" fill="${color}" opacity="0.8" />
-          <polygon points="58,26 66,14 74,26" fill="${color}" opacity="0.8" />
-          <!-- Big Eye -->
-          <circle cx="50" cy="50" r="14" fill="#ffffff" />
-          <circle cx="52" cy="50" r="6" fill="#1e1e24" />
-          <circle cx="54" cy="48" r="2" fill="#ffffff" />
+        <svg width="58" height="58" viewBox="0 0 100 100">
+          <defs>
+            <radialGradient id="grad-${color}" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.1"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="50" cy="55" rx="36" ry="34" fill="${color}" stroke="#1e293b" stroke-width="2.5"/>
+          <ellipse cx="50" cy="55" rx="36" ry="34" fill="url(#grad-${color})"/>
+          <!-- Horns -->
+          <polygon points="26,26 34,14 42,26" fill="${color}" stroke="#1e293b" stroke-width="2"/>
+          <polygon points="58,26 66,14 74,26" fill="${color}" stroke="#1e293b" stroke-width="2"/>
+          <!-- Eyes -->
+          <circle cx="40" cy="50" r="10" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+          <circle cx="42" cy="50" r="4.5" fill="#1e293b"/>
+          <circle cx="60" cy="50" r="10" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+          <circle cx="62" cy="50" r="4.5" fill="#1e293b"/>
           <!-- Smile -->
-          <path d="M 40 70 Q 50 78 60 70" stroke="#1e1e24" stroke-width="3" fill="none" stroke-linecap="round" />
+          <path d="M 42 68 Q 50 76 58 68" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>
         </svg>
       `;
     }
 
-    function renderGrid() {
-      const grid = document.getElementById('studentGrid');
-      grid.innerHTML = '';
+    function renderBoard() {
+      const board = document.getElementById('studentsBoard');
+      board.innerHTML = '';
 
-      students.forEach(student => {
+      students.forEach(s => {
         const card = document.createElement('div');
-        card.className = 'card';
-        card.onclick = () => openQuiz(student);
+        card.className = 'student-card';
+        card.onclick = () => openMathModal(s);
 
         card.innerHTML = `
-          <div class="avatar-wrap">${renderMonster(student.color)}</div>
-          <div class="name">${student.name}</div>
-          <div class="stats">
-            <span class="pill pill-points">&#9733; ${student.points} pts</span>
-            <span class="pill pill-warnings">&#9888; ${student.warnings}</span>
+          <div class="avatar-wrapper">${renderMonster(s.color)}</div>
+          <div class="student-title">${s.name}</div>
+          <div class="stats-row">
+            <span class="stat-pill pill-evo">⭐ ${s.evo} EVO</span>
+            <span class="stat-pill pill-warn">⚠️ ${s.warnings}</span>
           </div>
         `;
-        grid.appendChild(card);
+        board.appendChild(card);
       });
     }
 
-    function openQuiz(student) {
+    function renderEgg() {
+      const wrap = document.getElementById('eggVisual');
+      let crackLines = '';
+      if (eggCracks >= 1) crackLines += `<path d="M 50 35 L 42 50 L 52 62" stroke="#dc2626" stroke-width="3" fill="none"/>`;
+      if (eggCracks >= 2) crackLines += `<path d="M 52 62 L 44 76 L 56 88" stroke="#dc2626" stroke-width="3" fill="none"/>`;
+      if (eggCracks >= 3) crackLines += `<path d="M 42 50 L 26 56" stroke="#dc2626" stroke-width="3" fill="none"/>`;
+      if (eggCracks >= 4) crackLines += `<path d="M 52 62 L 74 68" stroke="#dc2626" stroke-width="3" fill="none"/>`;
+
+      let eggContent = `
+        <ellipse cx="50" cy="65" rx="38" ry="48" fill="#fffefb" stroke="#d4a373" stroke-width="4"/>
+        ${crackLines}
+      `;
+
+      if (eggCracks >= 5) {
+        // Fully cracked egg from the sketch
+        eggContent = `
+          <path d="M 16 65 Q 16 110 50 110 Q 84 110 84 65 L 70 65 L 60 75 L 50 65 L 40 75 L 30 65 Z" fill="#fffefb" stroke="#d4a373" stroke-width="3"/>
+          <path d="M 22 55 Q 50 8 78 55 L 65 48 L 50 58 L 35 48 Z" fill="#fffefb" stroke="#d4a373" stroke-width="3"/>
+          <ellipse cx="50" cy="85" rx="16" ry="12" fill="#ffd166"/>
+        `;
+      }
+
+      wrap.innerHTML = `<svg viewBox="0 0 100 120" width="120" height="145">${eggContent}</svg>`;
+      document.getElementById('eggStatusText').textContent = `Cracks: ${eggCracks} / 5 ${eggCracks >= 5 ? '(CRACKED!)' : ''}`;
+
+      const notice = document.getElementById('lockoutNotice');
+      if (eggCracks >= 5) {
+        isEggLocked = true;
+        notice.classList.add('active');
+      } else {
+        isEggLocked = false;
+        notice.classList.remove('active');
+      }
+    }
+
+    function resetEggLock() {
+      eggCracks = 0;
+      renderEgg();
+    }
+
+    function openMathModal(student) {
+      if (isEggLocked) {
+        alert("🔒 The Class Warning Egg is cracked and locked! Use the Teacher Reset to continue.");
+        return;
+      }
       activeStudent = student;
-      document.getElementById('modalStudentName').textContent = student.name;
-      document.getElementById('feedbackText').textContent = '';
-      document.getElementById('answerInput').value = '';
-
-      // Random Year 3 friendly addition (multiples of 10 or 2-digit sums)
-      currentA = (Math.floor(Math.random() * 4) + 1) * 10; // 10, 20, 30, 40
-      currentB = Math.floor(Math.random() * 30) + 10;      // 10 to 39
-
-      document.getElementById('mathProblem').textContent = `${currentA} + ${currentB} = ?`;
+      document.getElementById('modalStudentTitle').textContent = `${student.name}'s Challenge`;
+      document.getElementById('fbMessage').textContent = '';
+      document.getElementById('mathInput').value = '';
+      generateHardMath();
       document.getElementById('quizModal').classList.add('active');
-
-      setTimeout(() => {
-        document.getElementById('answerInput').focus();
-      }, 100);
+      setTimeout(() => document.getElementById('mathInput').focus(), 80);
     }
 
     function closeModal() {
       document.getElementById('quizModal').classList.remove('active');
     }
 
-    function checkAnswer() {
-      const val = parseInt(document.getElementById('answerInput').value, 10);
-      const fb = document.getElementById('feedbackText');
-      const correct = currentA + currentB;
+    function setDiff(diff) {
+      currentDifficulty = diff;
+      document.getElementById('diff-multi').classList.toggle('active', diff === 'multi');
+      document.getElementById('diff-tables').classList.toggle('active', diff === 'tables');
+      document.getElementById('diff-twostep').classList.toggle('active', diff === 'twostep');
+      generateHardMath();
+    }
 
+    function generateHardMath() {
+      if (currentDifficulty === 'multi') {
+        const isSub = Math.random() > 0.5;
+        if (isSub) {
+          const a = Math.floor(Math.random() * 60) + 40;
+          const b = Math.floor(Math.random() * 35) + 15;
+          currentAnswer = a - b;
+          document.getElementById('eqDisplay').textContent = `${a} - ${b} = ?`;
+        } else {
+          const a = Math.floor(Math.random() * 50) + 25;
+          const b = Math.floor(Math.random() * 45) + 20;
+          currentAnswer = a + b;
+          document.getElementById('eqDisplay').textContent = `${a} + ${b} = ?`;
+        }
+      } else if (currentDifficulty === 'tables') {
+        const tables = [3, 4, 6, 7, 8, 9, 12];
+        const a = tables[Math.floor(Math.random() * tables.length)];
+        const b = Math.floor(Math.random() * 8) + 3;
+        currentAnswer = a * b;
+        document.getElementById('eqDisplay').textContent = `${a} × ${b} = ?`;
+      } else { // 2-step equation
+        const a = Math.floor(Math.random() * 30) + 10;
+        const b = Math.floor(Math.random() * 20) + 10;
+        const c = Math.floor(Math.random() * 15) + 5;
+        currentAnswer = a + b - c;
+        document.getElementById('eqDisplay').textContent = `${a} + ${b} - ${c} = ?`;
+      }
+    }
+
+    function checkAnswer() {
+      const val = parseInt(document.getElementById('mathInput').value, 10);
+      const fb = document.getElementById('fbMessage');
       if (isNaN(val)) return;
 
-      if (val === correct) {
-        activeStudent.points += 2;
-        fb.className = 'feedback good';
-        fb.textContent = 'Correct! +2 points earned!';
-        renderGrid();
+      if (val === currentAnswer) {
+        activeStudent.evo += 2;
+        fb.className = 'fb-zone good';
+        fb.textContent = '🌟 Correct! +2 EVO Points added!';
+        renderBoard();
         setTimeout(closeModal, 900);
       } else {
+        // As requested: do not show the answer, only add warning & crack
         activeStudent.warnings += 1;
-        fb.className = 'feedback bad';
-        fb.textContent = `Incorrect (Answer was ${correct}). Warning added!`;
-        renderGrid();
+        if (eggCracks < 5) eggCracks++;
+        renderEgg();
+        renderBoard();
+
+        fb.className = 'fb-zone bad';
+        fb.textContent = '❌ Incorrect! +1 crack added to the Warning Egg!';
         setTimeout(closeModal, 1400);
       }
     }
 
-    // Enter key submits answer
-    document.getElementById('answerInput').addEventListener('keyup', (e) => {
+    // Surprise Pop Up Maths
+    function toggleRandomPopups() {
+      randomPopupsEnabled = !randomPopupsEnabled;
+      const btn = document.getElementById('btnPopToggle');
+      btn.classList.toggle('active', randomPopupsEnabled);
+      btn.textContent = randomPopupsEnabled ? '⏱️ Random Popups: ON' : '⏱️ Random Popups: OFF';
+
+      if (randomPopupsEnabled) {
+        scheduleNextPopup();
+      } else {
+        clearTimeout(popupTimer);
+      }
+    }
+
+    function scheduleNextPopup() {
+      if (!randomPopupsEnabled) return;
+      // Triggers between 30 and 60 seconds
+      const delay = (Math.floor(Math.random() * 30) + 30) * 1000;
+      popupTimer = setTimeout(() => {
+        if (randomPopupsEnabled && !document.getElementById('quizModal').classList.contains('active')) {
+          const randStudent = students[Math.floor(Math.random() * students.length)];
+          openMathModal(randStudent);
+        }
+        scheduleNextPopup();
+      }, delay);
+    }
+
+    // Leave Button: As drawn in their plan
+    function leaveApp() {
+      if (confirm("Are you sure you want to leave Fier Learners?")) {
+        alert("Session saved! You may close the browser tab.");
+      }
+    }
+
+    document.getElementById('mathInput').addEventListener('keyup', (e) => {
       if (e.key === 'Enter') checkAnswer();
     });
 
-    renderGrid();
+    renderBoard();
+    renderEgg();
   </script>
 </body>
 </html>
